@@ -18,6 +18,26 @@ import space.bum.spring_boot.domain.Book;
 public class SpringBootBootstrapLiveTest {
 
   @Test
+  public void whenUpdateCreatedBook_thenUpdated() {
+    Book book = createRandomBook();
+    String location = createBookAsUri(book);
+    book.setId(Long.parseLong(location.split("api/books/")[1]));
+    book.setAuthor("newAuthor");
+    Response response = RestAssured.given()
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .body(book)
+        .put(location);
+
+    assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+
+    response = RestAssured.get(location);
+
+    assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+    assertEquals("newAuthor", response.jsonPath()
+        .get("author"));
+  }
+
+  @Test
   public void whenInvalidBook_thenError() {
     Book book = createRandomBook();
     book.setAuthor(null);
