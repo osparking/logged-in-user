@@ -2,6 +2,9 @@ package space.bum.spring_boot;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -12,6 +15,17 @@ import io.restassured.response.Response;
 import space.bum.spring_boot.domain.Book;
 
 public class SpringBootBootstrapLiveTest {
+  @Test
+  public void whenGetBooksByTitle_thenOK() {
+    Book book = createRandomBook();
+    createBookAsUri(book);
+    Response response = RestAssured.get(
+        API_ROOT + "/title/" + book.getTitle());
+
+    assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+    assertTrue(response.as(List.class)
+        .size() > 0);
+  }
 
   @Test
   public void whenGetAllBooks_thenOK() {
