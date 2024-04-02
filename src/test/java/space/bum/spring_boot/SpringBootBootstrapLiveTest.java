@@ -16,6 +16,16 @@ import io.restassured.response.Response;
 import space.bum.spring_boot.domain.Book;
 
 public class SpringBootBootstrapLiveTest {
+  @Test
+  public void whenCreateNewBook_thenCreated() {
+    Book book = createRandomBook();
+    Response response = RestAssured.given()
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .body(book)
+        .post(API_ROOT);
+
+    assertEquals(HttpStatus.CREATED.value(), response.getStatusCode());
+  }
 
   @Test
   public void whenGetNotExistBookById_thenNotFound() {
