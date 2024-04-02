@@ -1,7 +1,10 @@
 package space.bum.spring_boot;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import io.restassured.RestAssured;
@@ -9,6 +12,13 @@ import io.restassured.response.Response;
 import space.bum.spring_boot.domain.Book;
 
 public class SpringBootBootstrapLiveTest {
+
+  @Test
+  public void whenGetAllBooks_thenOK() {
+    Response response = RestAssured.get(API_ROOT);
+
+    assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+  }
 
   private static final String API_ROOT = "http://localhost:8081/api/books";
 
