@@ -1,6 +1,7 @@
 package space.bum.spring_boot;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -15,6 +16,13 @@ import io.restassured.response.Response;
 import space.bum.spring_boot.domain.Book;
 
 public class SpringBootBootstrapLiveTest {
+
+  @Test
+  public void whenGetNotExistBookById_thenNotFound() {
+    Response response = RestAssured.get(API_ROOT + "/" + randomNumeric(4));
+
+    assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode());
+  }
 
   @Test
   public void whenGetCreatedBookById_thenOK() {
