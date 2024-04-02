@@ -15,6 +15,18 @@ import io.restassured.response.Response;
 import space.bum.spring_boot.domain.Book;
 
 public class SpringBootBootstrapLiveTest {
+
+  @Test
+  public void whenGetCreatedBookById_thenOK() {
+    Book book = createRandomBook();
+    String location = createBookAsUri(book);
+    Response response = RestAssured.get(location);
+
+    assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+    assertEquals(book.getTitle(), response.jsonPath()
+        .get("title"));
+  }
+
   @Test
   public void whenGetBooksByTitle_thenOK() {
     Book book = createRandomBook();
