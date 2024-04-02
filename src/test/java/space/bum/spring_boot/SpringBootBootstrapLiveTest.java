@@ -18,6 +18,18 @@ import space.bum.spring_boot.domain.Book;
 public class SpringBootBootstrapLiveTest {
 
   @Test
+  public void whenDeleteCreatedBook_thenOk() {
+    Book book = createRandomBook();
+    String location = createBookAsUri(book);
+    Response response = RestAssured.delete(location);
+
+    assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+
+    response = RestAssured.get(location);
+    assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode());
+  }
+
+  @Test
   public void whenUpdateCreatedBook_thenUpdated() {
     Book book = createRandomBook();
     String location = createBookAsUri(book);
