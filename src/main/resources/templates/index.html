@@ -7,6 +7,7 @@
 
 <body>
   <h2>환 - 영!</h2>
+  <div><span th:text="'오늘: '+ ${date}">오늘 날짜</span></div>
   <p>봄 보안 타임리프 교습서</p>
   <div sec:authorize="hasRole('USER')">user 에게 보인다.</div>
   <div sec:authorize="hasRole('ADMIN')">admin 에게 보인다.</div>
@@ -16,7 +17,7 @@
   인증된 사용자명:
   <div sec:authentication="name"></div>
   인증된 사용자 역할(role)들:
-  <div sec:authentication="principal.authorities"></div>
+  <!--<div sec:authentication="principal.authorities"></div>-->
 </body>
 
 </html>
